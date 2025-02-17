@@ -47,3 +47,5 @@ class TestVariationalQuantumCircuit(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+#python -m unittest discover -s tests
