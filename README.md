@@ -34,7 +34,7 @@ pip install .
 ```python
 import pennylane as qml
 import pandas as pd
-from quantum_learn import VariationalQuantumCircuit
+from qmlearn import VariationalQuantumCircuit
 
 # Create a sample dataset
 features = pd.DataFrame({
