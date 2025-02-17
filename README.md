@@ -4,15 +4,14 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/OsamaMIT/quantum-learn/blob/main/LICENSE)
 [![Python Versions](https://img.shields.io/pypi/pyversions/quantum-learn.svg)](https://pypi.org/project/quantum-learn/)
 
-**Quantum-Learn** is an open-source Python library that simplifies **Quantum Machine Learning (QML)** using **PennyLane**. Inspired by **scikit-learn**, it provides a high-level interface for creating, training, and evaluating **Variational Quantum Circuits (VQCs)** with ease.
+**Quantum-Learn** is an open-source Python library that simplifies **Quantum Machine Learning (QML)** using **PennyLane**. Inspired by **scikit-learn**, it provides a high-level interface for creating and training **Variational Quantum Circuits (VQCs)** with ease.
 
 ## Features
 
 - **Simple API** for training quantum models  
-- Supports **Variational Quantum Circuits (VQC)**  
+- Currently only supports **Variational Quantum Circuits (VQC)**  
 - Works with **PennyLane**, **scikit-learn**, and standard ML tools  
-- Customizable **Ansätze** (quantum circuit templates)  
-- Compatible with both **classical simulators** and **real quantum devices**
+- All aspects of a VQC are customizable
 
 ## Installation
 
@@ -65,9 +64,8 @@ For detailed usage and examples, check out the Quantum-Learn Documentation.
 
 ## Roadmap
 - Implement quantum kernel methods
-- Add pre-built ansätze for VQCs
-- Support more backends (IBM Q, Braket)
 - Improve compatibility with scikit-learn
+- Implement more abstract classes for applied QML tasks (similar to fastai)
 
 ## Contributing
 Contributions are welcome! To contribute:
@@ -75,5 +73,6 @@ Contributions are welcome! To contribute:
 Fork the repository
 Create a new branch (feature-branch)
 Commit your changes and open a pull request
-License
+
+## License
 This project is licensed under the MIT License. See the LICENSE file for details.
