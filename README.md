@@ -68,9 +68,9 @@ For detailed usage and examples, check out the Quantum-Learn Documentation (_com
 ## Contributing
 Contributions are welcome! To contribute:
 
-Fork the repository
-Create a new branch (feature-branch)
-Commit your changes and open a pull request
+1. Fork the repository
+2. Create a new branch (feature-branch)
+3. Commit your changes and open a pull request
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
