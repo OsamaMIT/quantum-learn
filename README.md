@@ -60,9 +60,8 @@ print(predictions)
 ## Documentation
 For detailed usage and examples, check out the Quantum-Learn Documentation (_coming soon_).
 
-## Roadmap
+## Planned Features
 - Implement quantum kernel methods
-- Improve compatibility with scikit-learn
 - Implement more abstract classes for applied QML tasks (similar to fastai)
 
 ## Contributing
