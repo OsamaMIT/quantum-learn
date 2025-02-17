@@ -32,8 +32,6 @@ pip install .
 ## Quick Start
 ### Train a Quantum Model
 ```python
-Copy
-Edit
 import pennylane as qml
 import pandas as pd
 from quantum_learn import VariationalQuantumCircuit
@@ -60,7 +58,7 @@ print(predictions)
 ```
 
 ## Documentation
-For detailed usage and examples, check out the Quantum-Learn Documentation.
+For detailed usage and examples, check out the Quantum-Learn Documentation (_coming soon_).
 
 ## Roadmap
 - Implement quantum kernel methods
