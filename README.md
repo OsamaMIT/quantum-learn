@@ -37,10 +37,11 @@ pip install .
 For tutorials, examples, and details on the classes, check out the quantum-learn documentation (_coming soon_).
 
 ## Dependencies
-quantum-learn requires:
-- Pandas
-- Pennylane
-- scikit-learn
+The required dependencies can be installed by
+
+```bash
+pip install -r requirements.txt
+```
 
 ## Planned Features
 - Implement quantum kernel methods
