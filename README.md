@@ -34,7 +34,7 @@ pip install .
 ```
 
 ## Documentation
-For tutorials, examples, and details on the classes, check out the quantum-learn documentation (_coming soon_).
+For tutorials, examples, and details on the classes, check out the [quantum-learn documentation](https://quantum-learn.readthedocs.io/en/latest/).
 
 ## Dependencies
 The required dependencies can be installed by
