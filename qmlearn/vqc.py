@@ -69,8 +69,9 @@ class VariationalQuantumCircuit:
                     params, cost = optimizer.step_and_cost(cost_function, params)
                     costs.append(cost)
 
-                print(f'Epoch {epoch+1}, mean cost: {np.mean(costs)}')
-                print(f'Params: {params}')
+                # If verbose = True
+                # print(f'Epoch {epoch+1}, mean cost: {np.mean(costs)}')
+                # print(f'Params: {params}')
             return params
 
         self.params = learn()
