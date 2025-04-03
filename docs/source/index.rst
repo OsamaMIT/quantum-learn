@@ -8,18 +8,17 @@ Welcome to the **quantum-learn** documentation! quantum-learn is a quantum machi
 
 **Features**
 --------
-*Pure Quantum Models*
+*Pure Quantum*
 
 - **Variational Quantum Circuits**: Build and train quantum circuits with customizable ansätze.
+
+*Hybrid Quantum*
+
 - **Quantum Feature Mapping**: Transform your classical data into a quantum feature space.
-
-*Hybrid Quantum Models*
-
 - Abstracted Hybrid-Quantum models that build on scikit-learn, including:
    - **Hybrid Regression**
    - **Hybrid Classification**
    - **Hybrid Clustering**
-
 
 **API Reference**
 -------------
