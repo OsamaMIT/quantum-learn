@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 import pandas as pd
-from qmlearn import HybridRegression
+from qlearn import HybridRegression
 
 def simple_regression_dataset():
     # For regression, we encode the continuous target as a 1D numpy array.

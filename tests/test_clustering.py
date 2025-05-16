@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 import pandas as pd
-from qmlearn import HybridClustering
+from qlearn import HybridClustering
 
 def simple_dataset():
     data = pd.DataFrame({

@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 import pandas as pd
-from qmlearn import HybridClassification
+from qlearn import HybridClassification
 
 def simple_quantum_dataset():
     # For a 2-qubit system, a valid state vector has 4 elements.

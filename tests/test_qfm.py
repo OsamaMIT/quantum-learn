@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 import pandas as pd
-from qmlearn import QuantumFeatureMap
+from qlearn import QuantumFeatureMap
 
 def simple_qfm_dataset():
     # Create a small dataset with two features
