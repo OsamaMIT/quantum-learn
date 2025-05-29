@@ -35,7 +35,7 @@ For a quick start, you can import the library as follows:
 
 .. code-block:: python
 
-    from qmlearn import HybridClassification, HybridRegression, HybridClustering, VariationalQuantumCircuit, QuantumFeatureMap
+    from qlearn import HybridClassification, HybridRegression, HybridClustering, VariationalQuantumCircuit, QuantumFeatureMap
 
     # Example for hybrid classification:
     clf = HybridClassification()
