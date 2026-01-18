@@ -3,6 +3,12 @@ import numpy as np
 import pandas as pd
 from qlearn import VariationalQuantumCircuit
 
+try:
+    from qlearn.pennylane import VariationalQuantumCircuit as PennylaneVariationalQuantumCircuit
+    HAS_PENNYLANE = True
+except Exception:
+    HAS_PENNYLANE = False
+
 def simple_quantum_dataset():
     # For a 2-qubit system, a valid state vector has 4 elements.
     # Here we encode:
@@ -43,6 +49,24 @@ class TestVariationalQuantumCircuit(unittest.TestCase):
         # Test invalid input handling
         with self.assertRaises(ValueError):
             self.vqc.train(None, self.labels, epochs=2)
+
+
+@unittest.skipUnless(HAS_PENNYLANE, "pennylane backend not available")
+class TestPennylaneVariationalQuantumCircuit(unittest.TestCase):
+    def setUp(self):
+        data = simple_quantum_dataset()
+        self.features = data[["feature1", "feature2"]]
+        self.labels = data[["label"]]
+        self.vqc = PennylaneVariationalQuantumCircuit()
+
+    def test_train(self):
+        self.vqc.train(self.features, self.labels, epochs=2)
+        self.assertIsNotNone(self.vqc.params)
+
+    def test_predict(self):
+        self.vqc.train(self.features, self.labels, epochs=2)
+        predictions = self.vqc.predict(self.features)
+        self.assertEqual(len(predictions), len(self.features))
 
 
 if __name__ == "__main__":
