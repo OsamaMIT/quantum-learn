@@ -10,7 +10,7 @@ class HybridClustering:
     def predict(self, data, n_clusters=0, model=None, random_state=42):
         if model is None:
             if n_clusters == 0:
-                model = MeanShift(random_state=random_state)
+                model = MeanShift()
                 if len(data) > 10000:
                     print('MeanShift is recommended for datasets with <10k samples, \n'
                     'clustering without a set number of clusters and >10k samples is not recommended.')

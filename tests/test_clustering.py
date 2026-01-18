@@ -21,5 +21,10 @@ class TestClustering(unittest.TestCase):
         self.assertEqual(len(clusters), len(self.data))
         self.assertIsInstance(clusters, np.ndarray)
 
+    def test_clustering_no_clusters(self):
+        clusters = self.clusterer.predict(self.data, n_clusters=0)
+        self.assertEqual(len(clusters), len(self.data))
+        self.assertIsInstance(clusters, np.ndarray)
+
 if __name__ == "__main__":
     unittest.main()

@@ -8,6 +8,7 @@ from qlearn.backends.base import QuantumFeatureMapBase
 
 
 class QuantumFeatureMap(QuantumFeatureMapBase):
+    @staticmethod
     def default_feature_map(data, qubits):
         # Layer 1: Initial rotations
         for i in range(min(len(data), qubits)):
@@ -61,6 +62,10 @@ class QuantumFeatureMap(QuantumFeatureMapBase):
         elif type(feature_map) == str:
             if feature_map == "default":
                 feature_map = QuantumFeatureMap.default_feature_map
+            else:
+                raise ValueError(
+                    "Feature map must be a function or a string containing a valid feature map name."
+                )
         elif callable(feature_map):
             pass
         else:
