@@ -30,5 +30,11 @@ class TestRegression(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.reg.predict(self.features)
 
+    def test_custom_model(self):
+        from sklearn.linear_model import Lasso
+        model = Lasso(random_state=123)
+        self.reg.train(self.features, self.labels, model=model)
+        self.assertIs(self.reg.model, model)
+
 if __name__ == "__main__":
     unittest.main()

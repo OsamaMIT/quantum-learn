@@ -9,6 +9,12 @@ try:
 except Exception:
     HAS_PENNYLANE = False
 
+try:
+    from qlearn.qiskit import VariationalQuantumCircuit as QiskitVariationalQuantumCircuit
+    HAS_QISKIT = True
+except Exception:
+    HAS_QISKIT = False
+
 def simple_quantum_dataset():
     # For a 2-qubit system, a valid state vector has 4 elements.
     # Here we encode:
@@ -38,6 +44,7 @@ class TestVariationalQuantumCircuit(unittest.TestCase):
         # Test if training works
         self.vqc.train(self.features, self.labels, epochs=2)
         self.assertIsNotNone(self.vqc.params)
+        self.assertEqual(self.vqc.params.shape[0], len(self.features.columns))
 
     def test_predict(self):
         # Test if prediction works
@@ -62,11 +69,29 @@ class TestPennylaneVariationalQuantumCircuit(unittest.TestCase):
     def test_train(self):
         self.vqc.train(self.features, self.labels, epochs=2)
         self.assertIsNotNone(self.vqc.params)
+        self.assertEqual(self.vqc.params.shape[0], len(self.features.columns))
 
     def test_predict(self):
         self.vqc.train(self.features, self.labels, epochs=2)
         predictions = self.vqc.predict(self.features)
         self.assertEqual(len(predictions), len(self.features))
+
+
+@unittest.skipUnless(HAS_QISKIT, "qiskit backend not available")
+class TestQiskitVariationalQuantumCircuit(unittest.TestCase):
+    def setUp(self):
+        data = simple_quantum_dataset()
+        self.features = data[["feature1", "feature2"]]
+        self.labels = data[["label"]]
+        self.vqc = QiskitVariationalQuantumCircuit()
+
+    def test_train_not_implemented(self):
+        with self.assertRaises(NotImplementedError):
+            self.vqc.train(self.features, self.labels, epochs=2)
+
+    def test_predict_not_implemented(self):
+        with self.assertRaises(NotImplementedError):
+            self.vqc.predict(self.features)
 
 
 if __name__ == "__main__":

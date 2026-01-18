@@ -33,5 +33,11 @@ class TestClassification(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.clf.predict(self.features)
 
+    def test_custom_model(self):
+        from sklearn.svm import SVC
+        model = SVC(kernel="linear", random_state=123)
+        self.clf.train(self.features, self.labels, model=model)
+        self.assertIs(self.clf.model, model)
+
 if __name__ == "__main__":
     unittest.main()

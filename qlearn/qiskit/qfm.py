@@ -15,17 +15,18 @@ class QuantumFeatureMap(QuantumFeatureMapBase):
     Qiskit-only quantum feature map transformer using StatevectorEstimator.
 
     Feature map function signatures supported:
-      - feature_map(row, qubits, qc): modifies an existing QuantumCircuit in-place
       - feature_map(row, qubits): returns a QuantumCircuit
+      - feature_map(row, qubits): sets feature_map.qc and returns None
     """
 
     @staticmethod
-    def default_feature_map(data, qubits, qc):
+    def default_feature_map(data, qubits):
         """
         Default Qiskit feature map (only circuit code, no backend/measurement).
 
         `data` is assumed to behave like a pandas Series/row.
         """
+        qc = QuantumCircuit(qubits)
 
         def get_val(i):
             try:
@@ -68,6 +69,8 @@ class QuantumFeatureMap(QuantumFeatureMapBase):
             qc.ry(val, i)
             qc.rz(val, i)
 
+        return qc
+
     def transform(
         self,
         data=None,
@@ -84,8 +87,8 @@ class QuantumFeatureMap(QuantumFeatureMapBase):
             Input classical data (rows are samples).
         feature_map : callable or str, optional
             - If callable:
-                * (row, qubits, qc): modifies qc in-place with qc.* gates
                 * (row, qubits): returns a QuantumCircuit
+                * (row, qubits): sets feature_map.qc and returns None
             - If "default": uses QuantumFeatureMap.default_feature_map.
             - If None: same as "default".
         qubits : int, optional
@@ -142,21 +145,20 @@ class QuantumFeatureMap(QuantumFeatureMapBase):
 
         sig = inspect.signature(feature_map)
         n_params = len(sig.parameters)
+        if n_params != 2:
+            raise TypeError(
+                "For Qiskit, feature_map must take (data, qubits)."
+            )
 
         for _, row in data.iterrows():
-            if n_params == 3:
-                qc = QuantumCircuit(qubits)
-                feature_map(row, qubits, qc)
-            elif n_params == 2:
-                qc = feature_map(row, qubits)
-                if not isinstance(qc, QuantumCircuit):
-                    raise TypeError(
-                        "Qiskit feature_map with 2 parameters must return a QuantumCircuit."
-                    )
-            else:
+            
+            qc = feature_map(row, qubits)
+            if qc is None:
+                qc = getattr(feature_map, "qc", None)
+
+            if not isinstance(qc, QuantumCircuit):
                 raise TypeError(
-                    "For Qiskit, feature_map must take (data, qubits, qc) "
-                    "or (data, qubits) and return a QuantumCircuit."
+                    "Qiskit feature_map must return a QuantumCircuit or set feature_map.qc."
                 )
 
             pub = (qc, observables)

@@ -2,6 +2,7 @@ import unittest
 import numpy as np
 import pandas as pd
 from qlearn import QuantumFeatureMap
+import warnings
 
 try:
     from qlearn.pennylane import QuantumFeatureMap as PennylaneQuantumFeatureMap
@@ -39,6 +40,17 @@ class TestQuantumFeatureMap(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.qfm.transform(None, qubits=2)
 
+    def test_transform_qubits_default_warns(self):
+        with warnings.catch_warnings(record=True) as warns:
+            warnings.simplefilter("always")
+            transformed = self.qfm.transform(self.data)
+        self.assertIsInstance(transformed, pd.DataFrame)
+        self.assertTrue(any("number of qubits" in str(w.message).lower() for w in warns))
+
+    def test_transform_invalid_feature_map_name(self):
+        with self.assertRaises(ValueError):
+            self.qfm.transform(self.data, feature_map="nope", qubits=2)
+
 
 @unittest.skipUnless(HAS_PENNYLANE, "pennylane backend not available")
 class TestPennylaneQuantumFeatureMap(unittest.TestCase):
@@ -48,6 +60,10 @@ class TestPennylaneQuantumFeatureMap(unittest.TestCase):
 
     def test_transform(self):
         transformed = self.qfm.transform(self.data, qubits=2)
+        self.assertIsInstance(transformed, pd.DataFrame)
+
+    def test_default_feature_map_callable(self):
+        transformed = self.qfm.transform(self.data, feature_map=self.qfm.default_feature_map, qubits=2)
         self.assertIsInstance(transformed, pd.DataFrame)
 
 
@@ -60,6 +76,42 @@ class TestQiskitQuantumFeatureMap(unittest.TestCase):
     def test_transform(self):
         transformed = self.qfm.transform(self.data, qubits=2)
         self.assertIsInstance(transformed, pd.DataFrame)
+
+    def test_feature_map_sets_qc_attribute(self):
+        from qiskit import QuantumCircuit
+
+        def feature_map(row, qubits):
+            qc = QuantumCircuit(qubits)
+            qc.h(0)
+            feature_map.qc = qc
+
+        transformed = self.qfm.transform(self.data, feature_map=feature_map, qubits=2)
+        self.assertIsInstance(transformed, pd.DataFrame)
+
+    def test_feature_map_returns_qc(self):
+        from qiskit import QuantumCircuit
+
+        def feature_map(row, qubits):
+            qc = QuantumCircuit(qubits)
+            qc.h(0)
+            return qc
+
+        transformed = self.qfm.transform(self.data, feature_map=feature_map, qubits=2)
+        self.assertIsInstance(transformed, pd.DataFrame)
+
+    def test_feature_map_wrong_signature(self):
+        def feature_map(row):
+            return row
+
+        with self.assertRaises(TypeError):
+            self.qfm.transform(self.data, feature_map=feature_map, qubits=2)
+
+    def test_feature_map_invalid_return(self):
+        def feature_map(row, qubits):
+            return None
+
+        with self.assertRaises(TypeError):
+            self.qfm.transform(self.data, feature_map=feature_map, qubits=2)
 
 if __name__ == "__main__":
     unittest.main()
