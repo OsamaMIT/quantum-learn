@@ -4,7 +4,7 @@
 
     [project]
     name = "quantum-learn"
-    version = "0.1.1"
+    version = "1.0.0"
     description = "quantum-learn: quantum machine learning in Python"
     readme = "README.md"
     authors = [{ name = "OsamaMIT", email = "author@example.com" }]
