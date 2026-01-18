@@ -4,13 +4,10 @@ import pandas as pd
 from qlearn import HybridRegression
 
 def simple_regression_dataset():
-    # For regression, we encode the continuous target as a 1D numpy array.
-    def encode(value):
-        return np.array([value])
     data = pd.DataFrame({
         "feature1": [0, 1, 2, 3],
         "feature2": [1, 2, 3, 4],
-        "label": [encode(v) for v in [0.0, 1.0, 2.0, 3.0]]
+        "label": [0.0, 1.0, 2.0, 3.0],
     })
     return data
 

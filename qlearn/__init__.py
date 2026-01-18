@@ -1,8 +1,7 @@
-from .vqc import VariationalQuantumCircuit
+from .pennylane import QuantumFeatureMap, VariationalQuantumCircuit
 from .classification import HybridClassification
 from .clustering import HybridClustering
 from .regression import HybridRegression
-from .qfm import QuantumFeatureMap
 
 __all__ = [
     "VariationalQuantumCircuit",
