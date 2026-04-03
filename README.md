@@ -37,15 +37,11 @@ pip install .
 For tutorials, examples, and details on the classes, check out the [quantum-learn documentation](https://quantum-learn.readthedocs.io/en/latest/).
 
 ## Dependencies
-The required dependencies can be installed by
+If you're working with the source, required dependencies can be installed by
 
 ```bash
 pip install -r requirements.txt
 ```
-
-## Planned Features
-- Implement quantum kernel methods
-- Implement categorical feature maps
 
 ## Contributing
 Contributions are welcome! To contribute:
