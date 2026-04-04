@@ -9,6 +9,7 @@ on:
 jobs:
   check-and-publish:
     runs-on: ubuntu-latest
+    environment: release
     permissions:
       contents: write    # Required to create GitHub Releases
       id-token: write    # Required for PyPI Trusted Publishing
