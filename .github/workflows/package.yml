@@ -1,0 +1,48 @@
+name: Auto Release on Version Bump
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pyproject.toml' # Only run when this file changes
+
+jobs:
+  check-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write    # Required to create GitHub Releases
+      id-token: write    # Required for PyPI Trusted Publishing
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      # 1. Check if version in pyproject.toml is newer than PyPI
+      - name: Check version
+        id: check
+        uses: maybe-hello-world/pyproject-check-version@v4
+        with:
+          pyproject-path: "./pyproject.toml"
+
+      # 2. If it's a new version, build the package
+      - name: Build package
+        if: steps.check.outputs.local_version_is_higher == 'true'
+        run: |
+          python -m pip install build
+          python -m build
+
+      # 3. Create the GitHub Release
+      - name: Create GitHub Release
+        if: steps.check.outputs.local_version_is_higher == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.check.outputs.local_version }}
+          name: Release v${{ steps.check.outputs.local_version }}
+          files: dist/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 4. Publish to PyPI using Trusted Publishing
+      - name: Publish to PyPI
+        if: steps.check.outputs.local_version_is_higher == 'true'
+        uses: pypa/gh-action-pypi-publish@release/v1
