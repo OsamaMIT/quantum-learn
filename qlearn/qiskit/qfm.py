@@ -77,6 +77,7 @@ class QuantumFeatureMap(QuantumFeatureMapBase):
         feature_map=None,
         qubits=None,
         estimator=None,
+        **_unused,
     ):
         """
         Transforms classical data using a quantum feature map with Qiskit.

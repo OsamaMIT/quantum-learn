@@ -2,3 +2,4 @@
 /docs/build/
 __pycache__
 *.egg-info/
+.codex

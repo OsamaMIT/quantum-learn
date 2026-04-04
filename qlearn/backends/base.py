@@ -3,13 +3,13 @@ from abc import ABC, abstractmethod
 
 class QuantumFeatureMapBase(ABC):
     @abstractmethod
-    def transform(self, data=None, feature_map=None, qubits=None, device=None):
-        pass
+    def transform(self, data=None, feature_map=None, qubits=None, **runtime_options):
+        """Transform classical features into quantum features."""
 
 
 class VariationalQuantumCircuitBase(ABC):
     @abstractmethod
-    def train(
+    def fit(
         self,
         features,
         labels,
@@ -17,12 +17,12 @@ class VariationalQuantumCircuitBase(ABC):
         batch_size=32,
         epochs=1,
         n_qubits=None,
-        device=None,
         ansatz=None,
         optimizer=None,
+        **runtime_options,
     ):
-        pass
+        """Train the circuit parameters."""
 
     @abstractmethod
-    def predict(self, features, n_qubits=None, device=None, diff_method="backprop"):
-        pass
+    def predict(self, features, n_qubits=None, **runtime_options):
+        """Run inference with the trained circuit."""

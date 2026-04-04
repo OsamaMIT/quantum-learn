@@ -1,43 +1,46 @@
-.. You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 quantum-learn documentation
 ===========================
 
-Welcome to the **quantum-learn** documentation! quantum-learn is a quantum machine learning library that bridges classical machine learning with quantum feature mapping, offering abstract hybrid models for classification, regression, clustering, and variational quantum circuits. This documentation is designed to help you quickly get started and explore the API of Quantum-Learn.
+`quantum-learn` provides backend-specific quantum APIs and higher-level hybrid estimators that can be configured with either Pennylane or Qiskit feature maps.
 
-**Features**
+Features
 --------
-*Pure Quantum*
 
-- **Variational Quantum Circuits**: Build and train quantum circuits with customizable ansätze.
+- Backend-specific APIs such as ``qlearn.pennylane.QuantumFeatureMap`` and ``qlearn.qiskit.QuantumFeatureMap``
+- Hybrid estimators for classification, regression, and clustering
+- Optional backend dependencies so importing ``qlearn`` does not require every quantum framework
 
-*Hybrid Quantum*
+Quickstart
+----------
 
-- **Quantum Feature Mapping**: Transform your classical data into a quantum feature space.
-- Abstracted Hybrid-Quantum models that build on scikit-learn, including:
-   - **Hybrid Regression**
-   - **Hybrid Classification**
-   - **Hybrid Clustering**
+Install a backend before using its quantum classes:
 
-**API Reference**
+.. code-block:: bash
+
+   pip install "quantum-learn[pennylane]"
+
+Use a hybrid estimator with an explicit backend:
+
+.. code-block:: python
+
+   from qlearn import HybridClassification
+
+   clf = HybridClassification(backend="pennylane")
+   clf.fit(features, labels)
+   predictions = clf.predict(features)
+
+Use a backend directly:
+
+.. code-block:: python
+
+   from qlearn.qiskit import QuantumFeatureMap
+
+   qfm = QuantumFeatureMap()
+   transformed = qfm.transform(features)
+
+API Reference
 -------------
-For detailed API documentation, you can refer to one of the pages below:
 
 .. toctree::
 
    api
-
-
-**Quickstart**
-----------
-For a quick start, you can import the library as follows:
-
-.. code-block:: python
-
-    from qlearn import HybridClassification, HybridRegression, HybridClustering, VariationalQuantumCircuit, QuantumFeatureMap
-
-    # Example for hybrid classification:
-    clf = HybridClassification()
-    clf.train(features, labels) # Where <features> and <labels> are dataframes containing your training data
-    predictions = clf.predict(features)
