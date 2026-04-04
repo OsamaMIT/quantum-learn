@@ -1,43 +1,92 @@
-.. You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 quantum-learn documentation
 ===========================
 
-Welcome to the **quantum-learn** documentation! quantum-learn is a quantum machine learning library that bridges classical machine learning with quantum feature mapping, offering abstract hybrid models for classification, regression, clustering, and variational quantum circuits. This documentation is designed to help you quickly get started and explore the API of Quantum-Learn.
+`quantum-learn` provides backend-specific quantum APIs and higher-level estimators built on top of quantum feature maps and variational quantum circuits.
 
-**Features**
+Features
 --------
-*Pure Quantum*
 
-- **Variational Quantum Circuits**: Build and train quantum circuits with customizable ansätze.
+- Backend-specific APIs such as ``qlearn.pennylane.QuantumFeatureMap`` and ``qlearn.qiskit.QuantumFeatureMap``
+- A generic ``VariationalQuantumCircuit`` with configurable measurements and losses
+- Hybrid estimators for classification, regression, and clustering
+- Task-oriented VQC wrappers with built-in defaults for classification and regression
+- Optional backend dependencies so importing ``qlearn`` does not require every quantum framework
 
-*Hybrid Quantum*
+Quickstart
+----------
 
-- **Quantum Feature Mapping**: Transform your classical data into a quantum feature space.
-- Abstracted Hybrid-Quantum models that build on scikit-learn, including:
-   - **Hybrid Regression**
-   - **Hybrid Classification**
-   - **Hybrid Clustering**
+Install a backend before using its quantum classes:
 
-**API Reference**
+.. code-block:: bash
+
+   pip install "quantum-learn[pennylane]"
+
+The base install does not include a quantum execution backend. Use a backend extra whenever you want to run quantum feature maps or variational circuits.
+
+Backend structure
+-----------------
+
+- ``qlearn.pennylane`` exposes the implemented Pennylane backend.
+- ``qlearn.qiskit`` currently exposes the Qiskit ``QuantumFeatureMap``.
+- Top-level classes such as ``qlearn.QuantumFeatureMap`` and ``qlearn.VariationalQuantumCircuit`` resolve to the default backend, which is currently Pennylane.
+
+Use a hybrid estimator with an explicit backend:
+
+.. code-block:: python
+
+   from qlearn import HybridClassification
+
+   clf = HybridClassification(backend="pennylane")
+   clf.fit(features, labels)
+   predictions = clf.predict(features)
+
+Use clustering with a sklearn-style workflow:
+
+.. code-block:: python
+
+   from qlearn import HybridClustering
+
+   clusterer = HybridClustering(backend="pennylane")
+   labels = clusterer.fit_predict(features, n_clusters=3)
+
+Use a backend directly:
+
+.. code-block:: python
+
+   from qlearn.qiskit import QuantumFeatureMap
+
+   qfm = QuantumFeatureMap()
+   transformed = qfm.transform(features)
+
+Use a VQC wrapper with built-in defaults:
+
+.. code-block:: python
+
+   from qlearn import VariationalQuantumClassifier
+
+   classifier = VariationalQuantumClassifier()
+   classifier.fit(features, labels)
+   predictions = classifier.predict(features)
+   probabilities = classifier.predict_proba(features)
+
+Use the generic VQC directly when you want explicit control over outputs and loss:
+
+.. code-block:: python
+
+   from qlearn import VariationalQuantumCircuit
+
+   vqc = VariationalQuantumCircuit()
+   vqc.fit(
+       features,
+       labels,
+       measurement="probabilities",
+       loss="cross_entropy",
+   )
+   raw_outputs = vqc.predict(features)
+
+API Reference
 -------------
-For detailed API documentation, you can refer to one of the pages below:
 
 .. toctree::
 
    api
-
-
-**Quickstart**
-----------
-For a quick start, you can import the library as follows:
-
-.. code-block:: python
-
-    from qlearn import HybridClassification, HybridRegression, HybridClustering, VariationalQuantumCircuit, QuantumFeatureMap
-
-    # Example for hybrid classification:
-    clf = HybridClassification()
-    clf.train(features, labels) # Where <features> and <labels> are dataframes containing your training data
-    predictions = clf.predict(features)

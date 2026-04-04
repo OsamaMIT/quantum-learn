@@ -1,52 +1,84 @@
 API Reference
 =============
 
-Variational Quantum Circuit
----------------------------
-Allows you to build and train variational quantum circuits with customizable ansätze. This module provides a flexible framework for creating quantum circuits that can be used for various quantum machine learning tasks.
+Package Root
+------------
 
-.. automodule:: qlearn.vqc
+The root package exposes the default backend wrappers and the backend-independent estimator classes.
+
+.. automodule:: qlearn
    :members:
    :undoc-members:
    :show-inheritance:
 
+Default Backend Wrappers
+------------------------
 
-Quantum Feature Map
--------------------
-Allows you to transform classical data into a quantum data using a quantum feature map. The data can be used with classical models as part of a hybrid quantum model.
+The top-level modules resolve to the default backend, which is currently Pennylane.
 
 .. automodule:: qlearn.qfm
    :members:
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: qlearn.vqc
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
-Hybrid Classification
----------------------
-Allows you to swiftly train and use hybrid quantum-classical models for classification tasks.
+.. automodule:: qlearn.vqc_classifier
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: qlearn.vqc_regressor
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+These wrappers sit on top of the generic variational circuit API:
+
+- ``qlearn.vqc``: default-backend ``VariationalQuantumCircuit``
+- ``qlearn.vqc_classifier``: automatic class encoding plus probability-based decoding
+- ``qlearn.vqc_regressor``: automatic target scaling plus inverse-scaling at prediction time
+
+Hybrid Estimators
+-----------------
 
 .. automodule:: qlearn.classification
    :members:
    :undoc-members:
    :show-inheritance:
 
-
-Hybrid Clustering
------------------
-Allows you to swiftly train and use hybrid quantum-classical models for clustering tasks.
-
 .. automodule:: qlearn.clustering
    :members:
    :undoc-members:
    :show-inheritance:
 
-
-Hybrid Regression
------------------
-Allows you to swiftly train hybrid and use quantum-classical models for regression tasks.
-
 .. automodule:: qlearn.regression
    :members:
    :undoc-members:
    :show-inheritance:
-   
+
+Pennylane Backend
+-----------------
+
+.. automodule:: qlearn.pennylane.qfm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+.. automodule:: qlearn.pennylane.vqc
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Qiskit Backend
+--------------
+
+.. automodule:: qlearn.qiskit.qfm
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+The Qiskit ``VariationalQuantumCircuit`` is not included in the public API yet because it is not implemented.
