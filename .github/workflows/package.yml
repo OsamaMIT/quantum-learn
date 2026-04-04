@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'pyproject.toml' # Only run when this file changes
+  workflow_dispatch:
 
 jobs:
   check-and-publish:
