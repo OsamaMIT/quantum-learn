@@ -5,10 +5,12 @@ on:
     branches: [main]
     paths:
       - 'pyproject.toml' # Only run when this file changes
+  workflow_dispatch:
 
 jobs:
   check-and-publish:
     runs-on: ubuntu-latest
+    environment: release
     permissions:
       contents: write    # Required to create GitHub Releases
       id-token: write    # Required for PyPI Trusted Publishing
